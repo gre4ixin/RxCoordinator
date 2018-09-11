@@ -6,13 +6,10 @@
 //  Copyright © 2018 Stefan Kofler. All rights reserved.
 //
 
-import Foundation
-import UIKit
-
 public typealias PresentationHandler = () -> Void
 
 public protocol Coordinator: RouteTrigger, Presentable {
-    associatedtype TransitionType: Transition
+    associatedtype TransitionType: TransitionProtocol
 
     var rootViewController: RootViewController { get }
 

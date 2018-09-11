@@ -6,9 +6,6 @@
 //  Copyright © 2018 Stefan Kofler. All rights reserved.
 //
 
-import Foundation
-import UIKit
-
 public protocol Presentable {
     var viewController: UIViewController! { get }
 
@@ -16,5 +13,9 @@ public protocol Presentable {
 }
 
 extension UIViewController: Presentable {
+    public func coordinator<R: Route>(for: R.Type) -> AnyCoordinator<R>? {
+        return nil
+    }
+
     public func presented(from presentingVC: Presentable?) {}
 }

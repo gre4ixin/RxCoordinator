@@ -1,13 +1,11 @@
 //
-//  Coordinator+Navigation.swift
+//  AnyTransitionPerformer+Navigation.swift
 //  XCoordinator
 //
-//  Created by Paul Kraft on 27.07.18.
+//  Created by Paul Kraft on 12.09.18.
 //
 
-import UIKit
-
-extension Coordinator where Self.TransitionType == NavigationTransition {
+extension AnyTransitionPerformer where TransitionType.RootViewController: UINavigationController {
     func push(_ viewController: UIViewController, with options: TransitionOptions, animation: Animation?, completion: PresentationHandler?) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)

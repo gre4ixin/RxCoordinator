@@ -6,28 +6,65 @@
 //  Copyright © 2018 Stefan Kofler. All rights reserved.
 //
 
-import Foundation
-import UIKit
+public struct Transition<RootViewController: UIViewController>: TransitionProtocol {
+    public typealias Perform = (TransitionOptions, AnyTransitionPerformer<Transition<RootViewController>>, PresentationHandler?) -> Void
+    private var _presentable: Presentable?
+    private var _perform: Perform
 
-public protocol Transition {
-    associatedtype RootViewController: UIViewController
+    public var presentable: Presentable? {
+        return _presentable
+    }
 
-    var presentable: Presentable? { get }
-    func perform<C: Coordinator>(options: TransitionOptions, coordinator: C, completion: PresentationHandler?) where C.TransitionType == Self
+    public init(presentable: Presentable?, perform: @escaping Perform) {
+        self._presentable = presentable
+        self._perform = perform
+    }
 
-    static func generateRootViewController() -> RootViewController
+    public func perform<C: Coordinator>(options: TransitionOptions, coordinator: C, completion: PresentationHandler?) where C.TransitionType == Transition<RootViewController> {
+        let anyPerformer = AnyTransitionPerformer(coordinator)
+        _perform(options, anyPerformer, completion)
+    }
 
-    // MARK: - Always accessible transitions
-
-    static func present(_ presentable: Presentable, animation: Animation?) -> Self
-    static func embed(_ presentable: Presentable, in container: Container) -> Self
-    static func dismiss(animation: Animation?) -> Self
-    static func none() -> Self
-    static func multiple(_ transitions: [Self], completion: PresentationHandler?) -> Self
+    public static func generateRootViewController() -> RootViewController {
+        return RootViewController()
+    }
 }
 
 extension Transition {
-    public static func multiple(_ transitions: Self..., completion: PresentationHandler?) -> Self {
-        return multiple(transitions, completion: completion)
+    public static func present(_ presentable: Presentable, animation: Animation? = nil) -> Transition {
+        return .init(presentable: presentable) { options, performer, completion in
+            presentable.presented(from: performer)
+            performer.present(presentable.viewController, with: options, animation: animation, completion: completion)
+        }
+    }
+
+    public static func embed(_ presentable: Presentable, in container: Container) -> Transition {
+        return .init(presentable: presentable) { options, performer, completion in
+            presentable.presented(from: performer)
+            performer.embed(presentable.viewController, in: container, with: options, completion: completion)
+        }
+    }
+
+    public static func dismiss(animation: Animation? = nil) -> Transition {
+        return .init(presentable: nil) { options, performer, completion in
+            performer.dismiss(with: options, animation: animation, completion: completion)
+        }
+    }
+
+    public static func none() -> Transition {
+        return .init(presentable: nil) { options, performer, completion in
+            completion?()
+        }
+    }
+
+    public static func multiple(_ transitions: [Transition<RootViewController>], completion: PresentationHandler?) -> Transition {
+        return .init(presentable: nil) { _, _, _ in }
+    }
+
+    public static func registerPeek<C: Coordinator>(for source: Container, route: C.RouteType, coordinator: C) -> Transition where C.TransitionType == Transition {
+        let transition = coordinator.prepareTransition(for: route)
+        return .init(presentable: transition.presentable) { options, performer, completion in
+            return performer.registerPeek(from: source.view, transition: transition, completion: completion)
+        }
     }
 }

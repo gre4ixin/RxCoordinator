@@ -5,52 +5,12 @@
 //  Created by Paul Kraft on 29.07.18.
 //
 
-public struct PageViewTransition: Transition {
+public typealias PageViewTransition = Transition<UIPageViewController>
 
-    // MARK: - Stored properties
-
-    let type: PageViewTransitionType
-
-    // MARK: - Computed properties
-
-    public var presentable: Presentable? {
-        return type.presentable
-    }
-
-    // MARK: - Init
-
-    private init(type: PageViewTransitionType) {
-        self.type = type
-    }
-
-    internal init(type: PageViewTransitionType, animation: Animation?) {
-        guard let animation = animation else {
-            self.init(type: type)
-            return
+extension Transition where RootViewController: UIPageViewController {
+    public static func set(_ presentables: [Presentable], direction: UIPageViewControllerNavigationDirection, animation: Animation? = nil) -> PageViewTransition {
+        return PageViewTransition(presentable: nil) { options, performer, completion in
+            performer.set(presentables.map { $0.viewController }, direction: direction, with: options, animation: animation, completion: completion)
         }
-        self.init(type: .animated(type, animation: animation))
-    }
-
-    // MARK: - Static functions
-
-    public static func generateRootViewController() -> UIPageViewController {
-        return UIPageViewController()
-    }
-
-    // MARK: - Methods
-
-    public func perform<C>(options: TransitionOptions, coordinator: C, completion: PresentationHandler?) where PageViewTransition == C.TransitionType, C : Coordinator {
-        type.perform(options: options, animation: nil, coordinator: coordinator, completion: completion)
     }
 }
-
-extension PageViewTransition {
-    public static func multiple(_ transitions: [PageViewTransition], completion: PresentationHandler?) -> PageViewTransition {
-        return PageViewTransition(type: .multiple(transitions.map { $0.type }), animation: nil)
-    }
-
-    static func multiple(_ transitions: [PageViewTransitionType]) -> PageViewTransition {
-        return PageViewTransition(type: .multiple(transitions), animation: nil)
-    }
-}
-

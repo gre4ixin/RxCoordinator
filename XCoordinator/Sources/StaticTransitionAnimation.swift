@@ -6,10 +6,7 @@
 //  Copyright © 2018 Stefan Kofler. All rights reserved.
 //
 
-import Foundation
-import UIKit
-
-public class StaticTransitionAnimation: NSObject, TranistionAnimation {
+public class StaticTransitionAnimation: NSObject, TransitionAnimation {
 
     // MARK: - Stored properties
 
