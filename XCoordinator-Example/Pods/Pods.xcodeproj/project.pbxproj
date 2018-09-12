@@ -214,6 +214,7 @@
 		9AB09CF5E27E3A2B28E33D5E6B3568D6 /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889F659CD3FC84D34558CCCA5B44CB1E /* Bag.swift */; };
 		9AB2FC7E21D58D420F91CE2C7FD1F432 /* RxSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DDE527BBCFC226BEE1E3B13EBBA94DA /* RxSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9ADCC5F6A43BAD8409CF17FA08D7CEDA /* UIPageControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AB55F92B728F68ABDCDAD4CD64321D /* UIPageControl+Rx.swift */; };
+		9B6DF62F2148E972006CBDF6 /* Transition+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6DF62E2148E972006CBDF6 /* Transition+Init.swift */; };
 		9B7A0BB22148861A003EA88F /* AnyTransitionPerformer+Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A0BB021488616003EA88F /* AnyTransitionPerformer+Page.swift */; };
 		9BBAB75D8205B96C4BA2744E1C4F363A /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F48A1C1A189F22AD1D33B7EF625F8C /* UIAlertAction+Rx.swift */; };
 		9C2CDD219FDE9EC21FC41EA7859EFAF2 /* AsyncSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC1ECAE6B478980CAD31FF5D3DF8A6 /* AsyncSubject.swift */; };
@@ -615,6 +616,7 @@
 		9A57DCA1A5DD1744B8530CC4BCE875DB /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CurrentThreadScheduler.swift; path = RxSwift/Schedulers/CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		9A739E9484F83C50E8F6C2B2CEDABAAA /* Reduce.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reduce.swift; path = RxSwift/Observables/Reduce.swift; sourceTree = "<group>"; };
 		9B6C91E20B25D6912714EFE4B4FE5F00 /* Lock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Lock.swift; path = RxSwift/Concurrency/Lock.swift; sourceTree = "<group>"; };
+		9B6DF62E2148E972006CBDF6 /* Transition+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Transition+Init.swift"; path = "XCoordinator/Sources/Transition+Init.swift"; sourceTree = "<group>"; };
 		9B7A0BB021488616003EA88F /* AnyTransitionPerformer+Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AnyTransitionPerformer+Page.swift"; path = "XCoordinator/Sources/AnyTransitionPerformer+Page.swift"; sourceTree = "<group>"; };
 		9C8FFCA4A933C8582CE59AE4442AF7E2 /* SectionedViewDataSourceType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SectionedViewDataSourceType.swift; path = RxCocoa/Common/SectionedViewDataSourceType.swift; sourceTree = "<group>"; };
 		9D55A2CC7C992A006479394A126C6D75 /* Never.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Never.swift; path = RxSwift/Observables/Never.swift; sourceTree = "<group>"; };
@@ -1345,6 +1347,7 @@
 				87D02DD2C3981A6E2752D91301F36298 /* TabBarCoordinator.swift */,
 				C02D6197AAB6AA0AF9A12AF4CD350909 /* TabBarTransition.swift */,
 				547FDD70651D75135114136A68549998 /* Transition.swift */,
+				9B6DF62E2148E972006CBDF6 /* Transition+Init.swift */,
 				FA52E1E74576BEE3CEDE85267F455AA5 /* TransitionAnimation.swift */,
 				AF77072D79E402241EBC0F36E10C69C2 /* TransitionOptions.swift */,
 				8537204FAD446C6E6A72759B7ACFE2E1 /* TransitionProtocol.swift */,
@@ -1906,6 +1909,7 @@
 				EA816909E555AAB4DE7928AEA1325D7C /* TransitionProtocol.swift in Sources */,
 				BCA154EC328437DFFCC17CCD526DE682 /* UIView+Store.swift in Sources */,
 				5B0F68FA66772E879A6027CD8F1C4193 /* ViewCoordinator.swift in Sources */,
+				9B6DF62F2148E972006CBDF6 /* Transition+Init.swift in Sources */,
 				9B7A0BB22148861A003EA88F /* AnyTransitionPerformer+Page.swift in Sources */,
 				318FFF1A849767FC104DC2AA7C77CC46 /* ViewTransition.swift in Sources */,
 				29681F724C8885B883D561548511F8AE /* XCoordinator-dummy.m in Sources */,
