@@ -22,7 +22,11 @@ public struct Transition<RootViewController: UIViewController>: TransitionProtoc
 
     public func perform<C: Coordinator>(options: TransitionOptions, coordinator: C, completion: PresentationHandler?) where C.TransitionType == Transition<RootViewController> {
         let anyPerformer = AnyTransitionPerformer(coordinator)
-        _perform(options, anyPerformer, completion)
+        perform(options: options, performer: anyPerformer, completion: completion)
+    }
+
+    func perform(options: TransitionOptions, performer: AnyTransitionPerformer<Transition>, completion: PresentationHandler?) {
+        _perform(options, performer, completion)
     }
 
     public static func generateRootViewController() -> RootViewController {
@@ -57,8 +61,17 @@ extension Transition {
         }
     }
 
-    public static func multiple(_ transitions: [Transition<RootViewController>], completion: PresentationHandler?) -> Transition {
-        return .init(presentable: nil) { _, _, _ in }
+    public static func multiple(_ transitions: [Transition<RootViewController>]) -> Transition {
+        return .init(presentable: nil) { options, performer, completion in
+            guard let firstTransition = transitions.first else {
+                completion?()
+                return
+            }
+            firstTransition.perform(options: options, performer: performer) {
+                let newTransitions = Array(transitions.dropFirst())
+                performer.performTransition(.multiple(newTransitions), with: options, completion: completion)
+            }
+        }
     }
 
     public static func registerPeek<C: Coordinator>(for source: Container, route: C.RouteType, coordinator: C) -> Transition where C.TransitionType == Transition {
